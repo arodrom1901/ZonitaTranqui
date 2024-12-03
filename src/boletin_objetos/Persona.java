@@ -7,17 +7,10 @@ public class Persona {
     private LocalDate fechaNacimiento;
     private String DNI;
     public char sexo;
-    public float altura;
-    public float peso;
+    public float altura, peso;
 
-    public Persona(String nombre, int year, int month, int day, int DNI, char sexo, float altura, float peso) throws PersonaException {
+    public Persona() {
 
-        this.setNombre(nombre);
-        this.setFechaNacimiento();
-        this.setDNI(DNI);
-        this.setSexo(sexo);
-        this.setAltura(altura);
-        this.setPeso(peso);
     }
 
     public String getNombre() {
@@ -35,19 +28,33 @@ public class Persona {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(int year, int month, int day) throws PersonaException {
+    public void setFechaNacimiento(int year, int month, int day) {
 
         this.fechaNacimiento = LocalDate.of(year, month, day);
-        if (year > 2024 || year <  1924) {
+    }
 
-            throw new PersonaException("No puedes poner esa cantidad");
-        } else if (month > 12 || month < 1) {
+    public float getPeso() {
+        return peso;
+    }
 
-            throw new PersonaException("No puedes introducir esa cantidad");
-        } else if (day > 31 || day < 1) {
-
-            throw new PersonaException("No puedes insertar esa cantidad");
+    public void setPeso(float peso) throws PersonaException {
+        if (peso <= 0) {
+            throw new PersonaException("Es imposible que peses 0 o menos");
         }
+
+        this.peso = peso;
+    }
+
+    public float getAltura() {
+        return altura;
+    }
+
+    public void setAltura(float altura) throws PersonaException {
+        if (altura <= 0) {
+            throw new PersonaException("No puede ser que midas 0 o menos");
+        }
+
+        this.altura = altura;
     }
 
     public String getDNI() {
@@ -65,9 +72,59 @@ public class Persona {
         this.DNI = DNI;
     }
 
-    public char getletraDNI() {
+    public char letraDNI() {
 
-        int letrDNI;
+        int letraDNI = Integer.parseInt(DNI) % 23;
+        char letra;
+
+        if (letraDNI == 0) {
+            letra = 'T';
+        } else if (letraDNI == 1) {
+            letra = 'R';
+        } else if (letraDNI == 2) {
+            letra = 'W';
+        } else if (letraDNI == 3) {
+            letra = 'A';
+        } else if (letraDNI == 4) {
+            letra = 'G';
+        } else if (letraDNI == 5) {
+            letra = 'M';
+        } else if (letraDNI == 6) {
+            letra = 'Y';
+        } else if (letraDNI == 7) {
+            letra = 'F';
+        } else if (letraDNI == 8) {
+            letra = 'P';
+        } else if (letraDNI == 9) {
+            letra = 'D';
+        } else if (letraDNI == 10) {
+            letra = 'X';
+        } else if (letraDNI == 11) {
+            letra = 'B';
+        } else if (letraDNI == 12) {
+            letra = 'N';
+        } else if (letraDNI == 13) {
+            letra = 'J';
+        } else if (letraDNI == 14) {
+            letra = 'Z';
+        } else if (letraDNI == 15) {
+            letra = 'S';
+        } else if (letraDNI == 16) {
+            letra = 'Q';
+        } else if (letraDNI == 17) {
+            letra = 'V';
+        } else if (letraDNI == 18) {
+            letra = 'H';
+        } else if (letraDNI == 19) {
+            letra = 'L';
+        } else if (letraDNI == 20) {
+            letra = 'L';
+        } else if (letraDNI == 21) {
+            letra = 'K';
+        } else {
+            letra = 'E';
+        }
+        return letra;
     }
 
     public char getSexo() {
@@ -80,24 +137,8 @@ public class Persona {
         this.sexo = sexo;
     }
 
-    public float getAltura() {
+    public double getIMC() {
 
-        return altura;
+        return peso / Math.pow(altura, 2);
     }
-
-    public void setAltura(float altura) {
-
-        this.altura = altura;
-    }
-
-    public float getPeso() {
-
-        return (float) (peso / Math.pow(altura, 2));
-    }
-
-    public void setPeso(float peso) {
-
-        this.peso = peso;
-    }
-}
 }
